@@ -15,7 +15,6 @@ function setConnection() {
     });
   
     conn.connect();
-    // return connection;
 }
 
 function endConnection() {
