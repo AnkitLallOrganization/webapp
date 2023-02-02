@@ -86,7 +86,7 @@ const getUser = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-    //Check if req object is correct and throw err as approriate.
+    //Check if req object is correct and throw err as approriate
     let check = true;
 
     if(!req.body.first_name) {
