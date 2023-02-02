@@ -2,7 +2,8 @@ const dbFuncs = require('../models/dbFuncs');
 
 const helper = require('../config/helper');
 
-const createNewUser = async (req, res) => {
+const createNewUser = async (err, req, res) => {
+    //Check if req object is correct and throw err as approriate.
     let check = true;
     if(!req.body.first_name) {
         check = false;
@@ -52,6 +53,7 @@ const createNewUser = async (req, res) => {
 }
 
 const getUser = async (req, res) => {
+    //Check if req object is correct and throw err as approriate.
     check = true;
 
     if (Object.keys(req.body).length){
@@ -84,6 +86,7 @@ const getUser = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
+    //Check if req object is correct and throw err as approriate.
     let check = true;
 
     if(!req.body.first_name) {
