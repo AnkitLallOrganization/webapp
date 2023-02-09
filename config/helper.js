@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
-const dbFuncs = require('../models/dbFuncs');
+// const dbFuncs = require('../models/dbFuncs');
+const db = require('../config/dbSetup');
 
 const createPassHash = async (pass) => {
     const salt = await bcrypt.genSalt();
@@ -7,7 +8,19 @@ const createPassHash = async (pass) => {
     return hashedpassword
 }
 
-const bAuthCheck = async (req, res, next) => {
+const getDecryptedCreds = (authHeader) => {
+  const base64Creds = authHeader.split(" ")[1];
+  const credentials = Buffer.from(base64Creds, "base64").toString(
+    "ascii"
+  );
+
+  const userName = credentials.split(":")[0];
+  const pass = credentials.split(":")[1];
+
+  return {userName, pass}
+}
+
+const uAuthCheck = async (req, res, next) => {
 
   //Check if auth header is present and is a basic auth header.
   if (!req.headers.authorization || req.headers.authorization.indexOf("Basic ") === -1) {
@@ -15,14 +28,8 @@ const bAuthCheck = async (req, res, next) => {
   }
 
   //decode the auth header
-  const base64Creds = req.headers.authorization.split(" ")[1];
-  const credentials = Buffer.from(base64Creds, "base64").toString(
-    "ascii"
-  );
-
-  const userName = credentials.split(":")[0];
-  const pass = credentials.split(":")[1];
-  const id = req.params.id;
+  let {userName, pass} = getDecryptedCreds(req.headers.authorization);
+  const id = req?.params?.id;
 
   //Check if user is valid
   let userAccCheck = await validUser(userName, pass);
@@ -32,16 +39,62 @@ const bAuthCheck = async (req, res, next) => {
       message: "Unauthorized",
     });
   } 
-  
+
   //Check if user creds match the user at id.
   let dbCheck = await dbCredVal(userName, pass,id);
   if(dbCheck) {
-      return res.status((dbCheck=='Forbidden')?403:400).json({
+      return res.status((dbCheck=='Forbidden')?403:404).json({
         message: dbCheck,
       });
+  } 
+
+  next();
+}
+
+const pAuthCheck = async (req, res, next) => {
+  //Check if auth header is present and is a basic auth header.
+  if (!req.headers.authorization || req.headers.authorization.indexOf("Basic ") === -1) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  //decode the auth header
+  let {userName, pass} = getDecryptedCreds(req.headers.authorization);
+  const id = req?.params?.id;
+
+  //Check if user is valid
+  let userAccCheck = await validUser(userName, pass);
+
+  if (!userName || !pass || !userAccCheck) {
+    return res.status(401).json({
+      message: "Unauthorized",
+    });
+  } 
+
+  if(id) {
+    //Check if user creds match the user at id.
+    let dbCheck = await dbProdVal(userName, pass,id);
+    if(dbCheck) {
+        return res.status((dbCheck=='Forbidden')?403:404).json({
+          message: dbCheck,
+        });
+    } 
   }
 
   next();
+}
+
+const dbProdVal = async (uName, pass, id) => {
+  let userInfo = await db.user.findOne({where: {username:uName}, attributes: ['id']});
+  let prodInfo = await db.product.findOne({where: {id:id}, attributes:['owner_user_id']});
+  if (!prodInfo) {
+      return 'Not Found';
+  }
+
+  if(userInfo.dataValues.id !== prodInfo.dataValues.owner_user_id) {
+    return 'Forbidden';
+  }
+
+  return '';
 }
 
 const validateEmail = (uName) => {
@@ -55,13 +108,12 @@ const validateEmail = (uName) => {
 }
 
 const validUser = async (userName, pass) => {
-  let check = true;
-  let result = await dbFuncs.getUserDataCreds(userName);
-  if (!result) {
+  let result = await db.user.findOne({where: {username:userName}, attributes: ['password']});
+  if (!result?.dataValues?.password) {
       return false;
   }
 
-  let passCheck = await bcrypt.compare(pass, result.password);
+  let passCheck = await bcrypt.compare(pass, result.dataValues.password);
   if(!passCheck) {
     return false;
   }
@@ -69,15 +121,15 @@ const validUser = async (userName, pass) => {
   return true;
 }
 
-const dbCredVal = async (userName, pass, id) => {
-  let result = await dbFuncs.getUserData(id);
+const dbCredVal = async (uName, pass, id) => {
+  let result = await db.user.findOne({where: {id:id}, attributes: ['username','password']});
   if (!result) {
-      return 'Bad Request';
+      return 'Not Found';
   }
 
-  let {username, password} = result;
+  let {username, password} = result.dataValues;
   let passCheck = await bcrypt.compare(pass, password);
-  if(username !== userName || !passCheck) {
+  if(username !== uName || !passCheck) {
     return 'Forbidden';
   }
 
@@ -86,8 +138,10 @@ const dbCredVal = async (userName, pass, id) => {
 
 module.exports = {
     createPassHash,
-    bAuthCheck,
+    uAuthCheck,
     dbCredVal,
     validateEmail,
-    validUser
+    validUser,
+    getDecryptedCreds,
+    pAuthCheck
 }
