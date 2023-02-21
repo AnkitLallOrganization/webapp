@@ -23,9 +23,9 @@ jobs:
       - run: npm install
       - run: npm install jest
       - run: npm run test
-      # - name: Create zip archive
-      #   uses: actions/archive@v2
-      #   with:
-      #     path: dist
-      #     format: zip
-      #     destination: build/webapp.zip
+      - name: Create zip archive
+        uses: vimtor/action-zip@v1
+        with:
+          path: dist
+          format: zip
+          destination: build/webapp.zip
