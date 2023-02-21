@@ -17,5 +17,5 @@ jobs:
           unzip packer_1.7.4_linux_amd64.zip
           sudo mv packer /usr/local/bin/
 
-      - name: Run Packer
-        run: packer validate ./packer/packer-app.pkr.hcl
+      - name: Run Packer        
+        run: packer init && packer validate ./packer/packer-app.pkr.hcl
