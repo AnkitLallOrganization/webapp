@@ -29,3 +29,12 @@ jobs:
           path: dist
           format: zip
           destination: build/webapp.zip
+      - name: Packer build
+        uses: ExitoLab/packer_build_action_aws@v0.2.10
+        with:
+          templateFile: 'packer-app.pkr.hcl'
+          workingDir: 'packer'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
