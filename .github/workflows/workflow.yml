@@ -24,11 +24,12 @@ jobs:
       - run: npm install jest
       - run: npm run test
       - name: Create zip archive
-        uses: vimtor/action-zip@v1
-        with:
-          path: dist
-          format: zip
-          destination: dist/build/webapp.zip
+        run: zip -r webapp.zip .
+        # uses: vimtor/action-zip@v1
+        # with:
+        #   path: dist
+        #   format: zip
+        #   destination: dist/build/webapp.zip
       - name: Packer build
         uses: ExitoLab/packer_build_action_aws@v0.2.10
         with:
