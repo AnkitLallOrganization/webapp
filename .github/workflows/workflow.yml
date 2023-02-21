@@ -28,7 +28,7 @@ jobs:
         with:
           path: dist
           format: zip
-          destination: build/webapp.zip
+          destination: dist/build/webapp.zip
       - name: Packer build
         uses: ExitoLab/packer_build_action_aws@v0.2.10
         with:
