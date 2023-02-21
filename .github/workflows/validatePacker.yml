@@ -18,4 +18,4 @@ jobs:
           sudo mv packer /usr/local/bin/
 
       - name: Run Packer
-        run: packer validate ./packer/packer-app.pkr.hcl
+        run: packer validate ../../packer/packer-app.pkr.hcl
