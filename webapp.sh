@@ -12,7 +12,7 @@ sudo mysqladmin -u root password "password"
 mysqladmin -u root --password=password --host=localhost --port=3306 create cloud_web
 sudo systemctl enable mariadb
 
-# unzip webapp.zip
-# cd webapp
-# npm I
-# DBHOST=localhost DBUSER=root DBPASS=password DATABASE=cloud_web PORT=3000 npm start
+unzip webapp.zip
+cd webapp
+npm I
+DBHOST=localhost DBUSER=root DBPASS=password DATABASE=cloud_web PORT=3000 npm start
