@@ -48,9 +48,14 @@ variable "DATABASE" {
   type = string
 }
 
+variable "ami_users" {
+  type    = list(string)
+  default = ["891054375493", "680696435068"]
+}
+
 source "amazon-ebs" "app-ami" {
   region          = "${var.aws_region}"
-  ami_name        = "ami-1"
+  name        = "ami-1"
   ami_description = "AMI test"
   ami_regions = [
     "us-east-1",
@@ -67,7 +72,7 @@ source "amazon-ebs" "app-ami" {
   ssh_username  = "${var.ssh_username}"
   subnet_id     = "${var.subnet_id}"
   vpc_id = "${var.vpc_id}"
-  profile       = "dev"
+  profile       = "packer"
 
   launch_block_device_mappings {
     delete_on_termination = true
