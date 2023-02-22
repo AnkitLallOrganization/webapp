@@ -23,6 +23,31 @@ variable "subnet_id" {
   default = "subnet-0074e79217ee7bf6e"
 }
 
+variable "DBUSER" {
+  type = string
+}
+
+variable "DBPASS" {
+  type = string
+}
+
+
+variable "DBHOST" {
+  type = string
+}
+
+variable "PORT" {
+  type = string
+}
+
+variable "DBPORT" {
+  type = string
+}
+
+variable "DATABASE" {
+  type = string
+}
+
 source "amazon-ebs" "app-ami" {
   region          = "${var.aws_region}"
   ami_name        = "ami-1"
@@ -67,6 +92,7 @@ build {
     // ]
 
     script = "./webapp.sh"
+    environment_vars = ["DBUSER=${var.DBUSER}", "DBPASS=${var.DBPASS}", "DBHOST=${var.DBHOST}", "PORT=${var.PORT}", "DATABASE=${var.DATABASE}", "DBPORT=${var.DBPORT}"]
 
   }
 }
