@@ -23,6 +23,21 @@ variable "subnet_id" {
   default = "subnet-051481c62c6ff86a6"
 }
 
+variable "deviceName" {
+  type    = string
+  default = "/dev/xvda"
+}
+
+variable "volSize" {
+  type    = string
+  default = 8
+}
+
+variable "volType" {
+  type    = string
+  default = "gp2"
+}
+
 variable "DBUSER" {
   type = string
 }
@@ -53,14 +68,32 @@ variable "ami_users" {
   default = ["891054375493", "680696435068"]
 }
 
+variable "instanceType" {
+  type    = string
+  default = "t2.micro"
+}
+
+variable "amiName" {
+  type    = string
+  default = "ami"
+}
+
+variable "amiDesc" {
+  type    = string
+  default = "AMI"
+}
+
+variable "amiRegions" {
+  type    = list(string)
+  default = ["us-east-1"]
+}
+
 source "amazon-ebs" "app-ami" {
   region          = "${var.aws_region}"
-  ami_name        = "ami-1"
-  ami_description = "AMI test"
+  ami_name        = "${var.amiName}${timestamp()}"
+  ami_description = "${var.amiDesc}"
   ami_users       = "${var.ami_users}"
-  ami_regions = [
-    "us-east-1",
-  ]
+  ami_regions = ["${var.amiRegions}"]
 
   aws_polling {
     delay_seconds = 120
@@ -68,18 +101,17 @@ source "amazon-ebs" "app-ami" {
   }
 
 
-  instance_type = "t2.micro"
+  instance_type = "${instanceType}"
   source_ami    = "${var.source_ami}"
   ssh_username  = "${var.ssh_username}"
   subnet_id     = "${var.subnet_id}"
   vpc_id        = "${var.vpc_id}"
-  profile       = "packer"
 
   launch_block_device_mappings {
     delete_on_termination = true
-    device_name           = "/dev/xvda"
-    volume_size           = 8
-    volume_type           = "gp2"
+    device_name           = "${var.deviceName}"
+    volume_size           = var.volSize
+    volume_type           = "${var.volType}"
   }
 }
 
