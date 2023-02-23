@@ -43,6 +43,6 @@ sudo amazon-linux-extras enable nginx1
 sudo yum clean metadata
 sudo yum -y install nginx
 sudo systemctl enable nginx
-sudo cp nginx.conf /etc/nginx/
+sudo cp ./packer/nginx.conf /etc/nginx/
 sudo systemctl restart nginx
 sudo systemctl reload nginx
