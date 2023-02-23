@@ -5,7 +5,7 @@ USER REQUIREMENTS:
 As a user, I should be able create a new user account by providing user input. The system must then validate and auto-generate some fields and store the data securely.
 As a user, I should be able to login to the system using correct credentials.
 As a user, I should be able to update certain account information fields.
-System should provide endpoint to check if the system is operational and healthy.
+System should provide endpoint to check if the system is operational and healthy
 
 -----------------------------------------------------------------------------------------------------------------
 
