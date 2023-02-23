@@ -48,13 +48,46 @@ variable "DATABASE" {
   type = string
 }
 
+variable "ami_name" {
+  type = string
+  default="ami-1"
+}
+
+variable "instance_type" {
+  type = string
+  default="t2.micro"
+}
+
+variable "profile" {
+  type = string
+  default="packer"
+}
+
+variable "device_name" {
+  type = string
+  default="/dev/xvda"
+}
+
+variable "volume_size" {
+  type = number
+  default=8
+}
+
+variable "volume_type" {
+  type = string
+  default="gp2"
+}
+
+variable "region" {
+  type = list(string)
+  default="us-east-1"
+}
+
 source "amazon-ebs" "app-ami" {
   region          = "${var.aws_region}"
-  ami_name        = "ami-1"
-  ami_description = "AMI test"
-  ami_regions = [
-    "us-east-1",
-  ]
+  ami_name        = "${var.ami_name}"
+  ami_description = "AMI"
+  ami_regions = ["${var.region}"]
 
   aws_polling {
     delay_seconds = 120
@@ -62,18 +95,18 @@ source "amazon-ebs" "app-ami" {
   }
 
 
-  instance_type = "t2.micro"
+  instance_type = "${var.instance_type}"
   source_ami    = "${var.source_ami}"
   ssh_username  = "${var.ssh_username}"
   subnet_id     = "${var.subnet_id}"
   vpc_id = "${var.vpc_id}"
-  profile       = "dev"
+  profile       = "${profile}"
 
   launch_block_device_mappings {
     delete_on_termination = true
-    device_name           = "/dev/xvda"
-    volume_size           = 8
-    volume_type           = "gp2"
+    device_name           = "${var.device_name}"
+    volume_size           = var.volume_size
+    volume_type           = "${var.volume_type}"
   }
 }
 
