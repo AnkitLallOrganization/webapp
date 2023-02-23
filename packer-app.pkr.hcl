@@ -80,7 +80,7 @@ variable "volume_type" {
 
 variable "region" {
   type = list(string)
-  default="us-east-1"
+  default=["us-east-1"]
 }
 
 source "amazon-ebs" "app-ami" {
