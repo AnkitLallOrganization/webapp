@@ -93,7 +93,7 @@ source "amazon-ebs" "app-ami" {
   ami_name        = "${var.amiName}${timestamp()}"
   ami_description = "${var.amiDesc}"
   ami_users       = "${var.ami_users}"
-  ami_regions = ["${var.amiRegions}"]
+  ami_regions = "${var.amiRegions}"
 
   aws_polling {
     delay_seconds = 120
@@ -101,7 +101,7 @@ source "amazon-ebs" "app-ami" {
   }
 
 
-  instance_type = "${instanceType}"
+  instance_type = "${var.instanceType}"
   source_ami    = "${var.source_ami}"
   ssh_username  = "${var.ssh_username}"
   subnet_id     = "${var.subnet_id}"
