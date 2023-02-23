@@ -27,6 +27,6 @@ jobs:
       - name: Install Packer
         run: sudo apt-get update && sudo apt-get install -y packer
       - name: Packer Init
-        run: packer init .
+        run: packer init packer
       - name: Packer Build - Branches
-        run: packer build .
+        run: packer build packer
