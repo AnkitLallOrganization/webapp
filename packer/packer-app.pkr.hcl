@@ -87,7 +87,7 @@ build {
   sources = ["source.amazon-ebs.app-ami"]
 
   provisioner "file" {
-    source      = "../webapp.zip"
+    source      = "../webapp"
     destination = "/home/ec2-user/webapp.zip"
   }
 
@@ -97,7 +97,7 @@ build {
     //   "CHECKPOINT_DISABLE=1"
     // ]
 
-    script           = "./webapp.sh"
+    script           = "packer/webapp.sh"
     environment_vars = ["DBUSER=${var.DBUSER}", "DBPASS=${var.DBPASS}", "DBHOST=${var.DBHOST}", "PORT=${var.PORT}", "DATABASE=${var.DATABASE}", "DBPORT=${var.DBPORT}"]
 
   }
