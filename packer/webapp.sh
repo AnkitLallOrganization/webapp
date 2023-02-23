@@ -19,7 +19,7 @@ sudo mysqladmin -u ${DBUSER} password ${DBPASS}
 mysqladmin -u ${DBUSER} --password=${DBPASS} --host=${DBHOST} --port=${DBPORT} create ${DATABASE}
 sudo systemctl enable mariadb
 
-unzip webapp.zip -d webapp
+unzip webapp.zip
 cd /home/ec2-user/webapp
 npm i
 
