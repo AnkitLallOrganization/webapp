@@ -28,7 +28,7 @@ npm i
 # rm -rf node_modules/
 # npm i
 
-sudo cp ./webapp.service /etc/systemd/system/
+sudo cp packer/webapp.service /etc/systemd/system/
 
 sudo systemctl daemon-reload
 sudo systemctl enable webapp.service
