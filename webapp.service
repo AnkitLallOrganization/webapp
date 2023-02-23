@@ -8,10 +8,9 @@ Environment=DBHOST=localhost
 Environment=DBUSER=root
 Environment=DBPASS=password
 Environment=DATABASE=cloud_web
-ExecStart=/usr/bin/npm run start
+ExecStart=/usr/bin/node /home/ec2-user/webapp/app.js
 Restart=always
 User=ec2-user
-WorkingDirectory=/home/ec2-user/webapp
 
 [Install]
 WantedBy=multi-user.target
