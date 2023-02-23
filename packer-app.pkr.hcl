@@ -83,11 +83,17 @@ variable "region" {
   default=["us-east-1"]
 }
 
+variable "ami_users" {
+  type    = list(string)
+  default = ["891054375493", "680696435068"]
+}
+
 source "amazon-ebs" "app-ami" {
   region          = "${var.aws_region}"
   ami_name        = "${var.ami_name}"
   ami_description = "AMI"
   ami_regions = "${var.region}"
+  ami_users       =   var.ami_users
 
   aws_polling {
     delay_seconds = 120
@@ -119,11 +125,6 @@ build {
   }
 
   provisioner "shell" {
-    // environment_vars = [
-    //   "DEBIAN_FRONTEND=noninteractive",
-    //   "CHECKPOINT_DISABLE=1"
-    // ]
-
     script = "./webapp.sh"
     environment_vars = ["DBUSER=${var.DBUSER}", "DBPASS=${var.DBPASS}", "DBHOST=${var.DBHOST}", "PORT=${var.PORT}", "DATABASE=${var.DATABASE}", "DBPORT=${var.DBPORT}"]
 
