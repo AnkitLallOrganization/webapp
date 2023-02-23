@@ -57,10 +57,10 @@ source "amazon-ebs" "app-ami" {
   region          = "${var.aws_region}"
   ami_name        = "ami-1"
   ami_description = "AMI test"
+  ami_users       = "${var.ami_users}"
   ami_regions = [
     "us-east-1",
   ]
-  ami_users       =   var.ami_users
 
   aws_polling {
     delay_seconds = 120
@@ -72,7 +72,7 @@ source "amazon-ebs" "app-ami" {
   source_ami    = "${var.source_ami}"
   ssh_username  = "${var.ssh_username}"
   subnet_id     = "${var.subnet_id}"
-  vpc_id = "${var.vpc_id}"
+  vpc_id        = "${var.vpc_id}"
   profile       = "packer"
 
   launch_block_device_mappings {
@@ -85,10 +85,10 @@ source "amazon-ebs" "app-ami" {
 
 build {
   sources = ["source.amazon-ebs.app-ami"]
-  
+
   provisioner "file" {
-      source = "./webapp.zip"
-      destination = "/home/ec2-user/webapp.zip"
+    source      = "./webapp.zip"
+    destination = "/home/ec2-user/webapp.zip"
   }
 
   provisioner "shell" {
@@ -97,7 +97,7 @@ build {
     //   "CHECKPOINT_DISABLE=1"
     // ]
 
-    script = "./webapp.sh"
+    script           = "./webapp.sh"
     environment_vars = ["DBUSER=${var.DBUSER}", "DBPASS=${var.DBPASS}", "DBHOST=${var.DBHOST}", "PORT=${var.PORT}", "DATABASE=${var.DATABASE}", "DBPORT=${var.DBPORT}"]
 
   }
