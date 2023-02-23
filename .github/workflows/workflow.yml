@@ -39,7 +39,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v1
       - name: Create zip archive
-        run: zip -r webapp.zip
+        run: zip -r webapp.zip .
       - name: Install Packer
         run: sudo apt-get update && sudo apt-get install -y packer
       - name: Packer Init
