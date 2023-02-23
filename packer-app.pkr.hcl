@@ -100,7 +100,7 @@ source "amazon-ebs" "app-ami" {
   ssh_username  = "${var.ssh_username}"
   subnet_id     = "${var.subnet_id}"
   vpc_id = "${var.vpc_id}"
-  profile       = "${profile}"
+  profile       = "${var.profile}"
 
   launch_block_device_mappings {
     delete_on_termination = true
