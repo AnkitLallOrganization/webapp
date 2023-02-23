@@ -88,14 +88,9 @@ variable "amiRegions" {
   default = ["us-east-1"]
 }
 
-locals {
-  timestamp           = timestamp()
-  timestamp_sanitized = replace("${local.timestamp}", "/[- TZ:]/", "")
-}
-
 source "amazon-ebs" "app-ami" {
   region          = "${var.aws_region}"
-  ami_name        = "AMI-${local.timestamp_sanitized}"
+  ami_name        = "AMI-1"
   ami_description = "${var.amiDesc}"
   ami_users       = "${var.ami_users}"
   ami_regions = "${var.amiRegions}"
@@ -106,7 +101,7 @@ source "amazon-ebs" "app-ami" {
   }
 
   tags = {
-    Name = "AMI-${local.timestamp_sanitized}"
+    Name = "AMI-1"
   }
 
   instance_type = "${var.instanceType}"
