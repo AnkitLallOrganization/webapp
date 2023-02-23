@@ -87,7 +87,7 @@ source "amazon-ebs" "app-ami" {
   region          = "${var.aws_region}"
   ami_name        = "${var.ami_name}"
   ami_description = "AMI"
-  ami_regions = ["${var.region}"]
+  ami_regions = "${var.region}"
 
   aws_polling {
     delay_seconds = 120
