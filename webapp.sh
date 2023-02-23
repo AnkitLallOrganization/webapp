@@ -19,7 +19,6 @@ sudo mysqladmin -u ${DBUSER} password ${DBPASS}
 mysqladmin -u ${DBUSER} --password=${DBPASS} --host=${DBHOST} --port=${DBPORT} create ${DATABASE}
 sudo systemctl enable mariadb
 
-ls
 unzip webapp.zip -d webapp
 cd /home/ec2-user/webapp
 npm i
@@ -29,7 +28,7 @@ npm i
 # rm -rf node_modules/
 # npm i
 
-sudo cp packer/webapp.service /etc/systemd/system/
+sudo cp ./webapp.service /etc/systemd/system/
 
 sudo systemctl daemon-reload
 sudo systemctl enable webapp.service
@@ -43,6 +42,6 @@ sudo amazon-linux-extras enable nginx1
 sudo yum clean metadata
 sudo yum -y install nginx
 sudo systemctl enable nginx
-sudo cp ./packer/nginx.conf /etc/nginx/
+sudo cp nginx.conf /etc/nginx/
 sudo systemctl restart nginx
 sudo systemctl reload nginx
