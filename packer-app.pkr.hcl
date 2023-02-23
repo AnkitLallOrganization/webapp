@@ -15,27 +15,12 @@ variable "ssh_username" {
 
 variable "vpc_id" {
   type    = string
-  default = "vpc-01276ec252f7960ce"
+  default = "vpc-0ed6bb552bcf330bd"
 }
 
 variable "subnet_id" {
   type    = string
-  default = "subnet-051481c62c6ff86a6"
-}
-
-variable "deviceName" {
-  type    = string
-  default = "/dev/xvda"
-}
-
-variable "volSize" {
-  type    = string
-  default = 8
-}
-
-variable "volType" {
-  type    = string
-  default = "gp2"
+  default = "subnet-0074e79217ee7bf6e"
 }
 
 variable "DBUSER" {
@@ -63,67 +48,41 @@ variable "DATABASE" {
   type = string
 }
 
-variable "ami_users" {
-  type    = list(string)
-  default = ["891054375493", "680696435068"]
-}
-
-variable "instanceType" {
-  type    = string
-  default = "t2.micro"
-}
-
-variable "amiName" {
-  type    = string
-  default = "ami"
-}
-
-variable "amiDesc" {
-  type    = string
-  default = "AMI"
-}
-
-variable "amiRegions" {
-  type    = list(string)
-  default = ["us-east-1"]
-}
-
 source "amazon-ebs" "app-ami" {
   region          = "${var.aws_region}"
-  ami_name        = "AMI-1"
-  ami_description = "${var.amiDesc}"
-  ami_users       = "${var.ami_users}"
-  ami_regions = "${var.amiRegions}"
+  ami_name        = "ami-1"
+  ami_description = "AMI test"
+  ami_regions = [
+    "us-east-1",
+  ]
 
   aws_polling {
     delay_seconds = 120
     max_attempts  = 50
   }
 
-  tags = {
-    Name = "AMI-1"
-  }
 
-  instance_type = "${var.instanceType}"
+  instance_type = "t2.micro"
   source_ami    = "${var.source_ami}"
   ssh_username  = "${var.ssh_username}"
   subnet_id     = "${var.subnet_id}"
-  vpc_id        = "${var.vpc_id}"
+  vpc_id = "${var.vpc_id}"
+  profile       = "dev"
 
   launch_block_device_mappings {
     delete_on_termination = true
-    device_name           = "${var.deviceName}"
-    volume_size           = var.volSize
-    volume_type           = "${var.volType}"
+    device_name           = "/dev/xvda"
+    volume_size           = 8
+    volume_type           = "gp2"
   }
 }
 
 build {
   sources = ["source.amazon-ebs.app-ami"]
-
+  
   provisioner "file" {
-    source      = "../webapp"
-    destination = "/home/ec2-user/webapp.zip"
+      source = "./webapp.zip"
+      destination = "/home/ec2-user/webapp.zip"
   }
 
   provisioner "shell" {
@@ -132,7 +91,7 @@ build {
     //   "CHECKPOINT_DISABLE=1"
     // ]
 
-    script           = "packer/webapp.sh"
+    script = "./webapp.sh"
     environment_vars = ["DBUSER=${var.DBUSER}", "DBPASS=${var.DBPASS}", "DBHOST=${var.DBHOST}", "PORT=${var.PORT}", "DATABASE=${var.DATABASE}", "DBPORT=${var.DBPORT}"]
 
   }
