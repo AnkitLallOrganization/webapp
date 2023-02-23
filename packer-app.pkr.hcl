@@ -15,12 +15,12 @@ variable "ssh_username" {
 
 variable "vpc_id" {
   type    = string
-  default = "vpc-0ed6bb552bcf330bd"
+  default = "vpc-01276ec252f7960ce"
 }
 
 variable "subnet_id" {
   type    = string
-  default = "subnet-0074e79217ee7bf6e"
+  default = "subnet-051481c62c6ff86a6"
 }
 
 variable "DBUSER" {
