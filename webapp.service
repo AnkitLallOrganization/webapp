@@ -3,10 +3,10 @@ Description= Webapp
 After=network.target
 
 [Service]
-
-ExecStart=/usr/bin/node /home/ec2-user/webapp/app.js
+ExecStart=/usr/bin/npm run start
 Restart=always
 User=ec2-user
+WorkingDirectory=/home/ec2-user/webapp
 
 [Install]
 WantedBy=multi-user.target
