@@ -21,12 +21,6 @@ sudo systemctl enable mariadb
 
 unzip webapp.zip -d webapp
 cd /home/ec2-user/webapp
-echo DBHOST=$DBHOST > .env
-echo DBUSER=$DBUSER >> .env
-echo DBPASS=$DBPASS >> .env
-echo DATABASE=$DATABASE >> .env
-echo PORT=$PORT >> .env
-echo DBPORT=$DBPORT >> .env
 npm i
 
 # #Giving exec writes to owner, user and group

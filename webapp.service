@@ -3,11 +3,11 @@ Description= Webapp
 After=network.target
 
 [Service]
-#Environment=PORT=3000
-#Environment=DBHOST=localhost
-#Environment=DBUSER=root
-#Environment=DBPASS=password
-#Environment=DATABASE=cloud_web
+Environment=PORT=3000
+Environment=DBHOST=localhost
+Environment=DBUSER=root
+Environment=DBPASS=password
+Environment=DATABASE=cloud_web
 ExecStart=/usr/bin/npm run start
 Restart=always
 User=ec2-user
