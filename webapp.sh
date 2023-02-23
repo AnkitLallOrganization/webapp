@@ -2,12 +2,12 @@
 
 sudo yum update -y
 
-export DBHOST=${DBHOST}
-export DBUSER=${DBUSER}
-export DBPASS=${DBPASS}
-export DATABASE=${DATABASE}
-export PORT=${PORT}
-export DBPORT=${DBPORT}
+export DBHOST="$DBHOST"
+export DBUSER="$DBUSER"
+export DBPASS="$DBPASS"
+export DATABASE="$DATABASE"
+export PORT=$PORT
+export DBPORT=$DBPORT
 
 sudo yum install -y gcc-c++ make
 curl -sL https://rpm.nodesource.com/setup_16.x | sudo -E bash -
