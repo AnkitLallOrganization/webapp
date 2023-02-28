@@ -11,7 +11,7 @@ The .sh file includes dependencies that need to be installed, such as Node.js an
 
 The endpoints available for operations include GET, POST, PUT, PATCH, and DELETE requests for users and products. The HTTP messages that can be received include "200 OK," "201 Created," "204 No Content," "400 Bad Request," "401 Unauthenticated," "403 Forbidden," and "500 Internal Server Error."
 
-To test the API calls, appropriate files need to be created in an IDE and the code can be written. POSTMAN can be used to test the APIs, and the database can be checked after each API call to see the status. After testing, a pull request with a detailed description of changes can be created.
+To test the API calls, appropriate files need to be created in an IDE and the code can be written. POSTMAN can be used to test the APIs, and the database can be checked after each API call to see the status. After testing, a pull request with a detailed description of changes can be created
 
 ## Prerequisites
 
