@@ -23,30 +23,30 @@ variable "subnet_id" {
   default = "subnet-051481c62c6ff86a6"
 }
 
-variable "DBUSER" {
-  type = string
-}
+// variable "DBUSER" {
+//   type = string
+// }
 
-variable "DBPASS" {
-  type = string
-}
+// variable "DBPASS" {
+//   type = string
+// }
 
 
-variable "DBHOST" {
-  type = string
-}
+// variable "DBHOST" {
+//   type = string
+// }
 
-variable "PORT" {
-  type = string
-}
+// variable "PORT" {
+//   type = string
+// }
 
-variable "DBPORT" {
-  type = string
-}
+// variable "DBPORT" {
+//   type = string
+// }
 
-variable "DATABASE" {
-  type = string
-}
+// variable "DATABASE" {
+//   type = string
+// }
 
 variable "ami_users" {
   type    = list(string)
@@ -98,7 +98,7 @@ build {
     // ]
 
     script = "./webapp.sh"
-    environment_vars = ["DBUSER=${var.DBUSER}", "DBPASS=${var.DBPASS}", "DBHOST=${var.DBHOST}", "PORT=${var.PORT}", "DATABASE=${var.DATABASE}", "DBPORT=${var.DBPORT}"]
+    // environment_vars = ["DBUSER=${var.DBUSER}", "DBPASS=${var.DBPASS}", "DBHOST=${var.DBHOST}", "PORT=${var.PORT}", "DATABASE=${var.DATABASE}", "DBPORT=${var.DBPORT}"]
 
   }
 }

@@ -29,14 +29,6 @@ sudo yum install -y gcc-c++ make
 curl -sL https://rpm.nodesource.com/setup_16.x | sudo -E bash -
 sudo yum install -y nodejs
 
-Mariadb 
-
-sudo yum install mariadb mariadb-server -y
-sudo systemctl start mariadb
-sudo mysqladmin -u ${DBUSER} password ${DBPASS}
-mysqladmin -u ${DBUSER} --password=${DBPASS} --host=${DBHOST} --port=${DBPORT} create ${DATABASE}
-sudo systemctl enable mariadb
-
 #unzip the file
 unzip webapp.zip -d webapp
 cd /home/ec2-user/webapp
