@@ -1,6 +1,7 @@
 #!/bin/bash
 
 sudo yum update -y
+sudo yum upgrade -y
 
 # export DBHOST=${DBHOST}
 # export DBUSER=${DBUSER}
@@ -13,11 +14,11 @@ sudo yum install -y gcc-c++ make
 curl -sL https://rpm.nodesource.com/setup_16.x | sudo -E bash -
 sudo yum install -y nodejs
 
-sudo yum install mariadb mariadb-server -y
-sudo systemctl start mariadb
-sudo mysqladmin -u ${DBUSER} password ${DBPASS}
-mysqladmin -u ${DBUSER} --password=${DBPASS} --host=${DBHOST} --port=${DBPORT} create ${DATABASE}
-sudo systemctl enable mariadb
+# sudo yum install mariadb mariadb-server -y
+# sudo systemctl start mariadb
+# sudo mysqladmin -u ${DBUSER} password ${DBPASS}
+# mysqladmin -u ${DBUSER} --password=${DBPASS} --host=${DBHOST} --port=${DBPORT} create ${DATABASE}
+# sudo systemctl enable mariadb
 
 unzip webapp.zip -d webapp
 cd /home/ec2-user/webapp
