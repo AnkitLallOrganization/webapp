@@ -37,12 +37,6 @@ npm i
 
 sudo cp ./webapp.service /etc/systemd/system/
 
-sudo systemctl daemon-reload
-sudo systemctl enable webapp.service
-# sudo systemctl start webapp.service
-
-
-
 # Install nginx
 sudo amazon-linux-extras list | grep nginx
 sudo amazon-linux-extras enable nginx1
