@@ -6,13 +6,15 @@ const uploadFile = require("../middleware/upload");
 const db = require('../config/dbSetup');
 const BUCKET_NAME = process.env.BUCKETNAME;
 
+const helper = require('../config/helper')
+
 const s3 = new AWS.S3()
 
 const upload = async (req,res) => {
     try {
         await uploadFile(req, res);
     
-        if (req.file == undefined) {
+        if (req.file == undefined || !helper.checkFileType(req.file.mimetype.split('/')[1])) {
           return res.status(400).send({ message: "Bad Request!! Please upload a file." });
         }
 
