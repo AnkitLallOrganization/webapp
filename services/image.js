@@ -110,6 +110,12 @@ const delImage = async (req, res) => {
 
         await s3.deleteObject(params).promise();
 
+        await db.image.destroy({
+            where:{
+                image_id:id
+            }
+        })
+
         return res.status(204).send(); 
     }catch(err) {
         console.log("DB Error ", err);
