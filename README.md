@@ -1,9 +1,4 @@
- The following is a guide for creating an Amazon Machine Image (AMI) using Packer and shell script. The Packer file will create an AMI file which can be shared across Dev and Demo accounts. Once the AMI is created, an EC2 instance can be created using Terraform. The public address of the instance can be obtained and the Webapp that was created can be run
-
-The Webapp is used for API testing and is created using Node.js and MYSQL2. The API requests can be tested using POSTMAN. The prerequisites for this project include Visual Studio Code, POSTMAN, MySQL database, Node.js, AWS, and Terraform.
-
-The .sh file includes dependencies that need to be installed, such as Node.js and Mariadb. The commands in the .sh file include unzipping the Webapp.zip file, installing …
- The following is a guide for creating an Amazon Machine Image (AMI) using Packer and shell script. The Packer file will create an AMI file which can be shared across Dev and Demo accounts. Once the AMI is created, an EC2 instance can be created using Terraform. The public address of the instance can be obtained and the Webapp that was created can be run.
+The following is a guide for creating an Amazon Machine Image (AMI) using Packer and shell script. The Packer file will create an AMI file which can be shared across Dev and Demo accounts. Once the AMI is created, an EC2 instance can be created using Terraform. The public address of the instance can be obtained and the Webapp that was created can be run.
 
 The Webapp is used for API testing and is created using Node.js and MYSQL2. The API requests can be tested using POSTMAN. The prerequisites for this project include Visual Studio Code, POSTMAN, MySQL database, Node.js, AWS, and Terraform.
 
@@ -13,14 +8,17 @@ The endpoints available for operations include GET, POST, PUT, PATCH, and DELETE
 
 To test the API calls, appropriate files need to be created in an IDE and the code can be written. POSTMAN can be used to test the APIs, and the database can be checked after each API call to see the status. After testing, a pull request with a detailed description of changes can be created.
 
+Amazon RDS creates the database schema and APIs can be tested through it. The Image details are stored in the RDS and meta data is stored in S3.
+
 ## Prerequisites
 
 1.Visual studio code (IDE)
 2.POSTMAN
 3.Database - MySQL
 4.Node.js
-5. AWS
-6. Terraform
+5.AWS
+6.Terraform
+7.Packer
 
 ## Dependencies to be installed .sh file
 
@@ -29,41 +27,15 @@ sudo yum install -y gcc-c++ make
 curl -sL https://rpm.nodesource.com/setup_16.x | sudo -E bash -
 sudo yum install -y nodejs
 
-Mariadb 
-
-sudo yum install mariadb mariadb-server -y
-sudo systemctl start mariadb
-sudo mysqladmin -u ${DBUSER} password ${DBPASS}
-mysqladmin -u ${DBUSER} --password=${DBPASS} --host=${DBHOST} --port=${DBPORT} create ${DATABASE}
-sudo systemctl enable mariadb
-
 #unzip the file
 unzip webapp.zip -d webapp
 cd /home/ec2-user/webapp
 npm i
 
-#Giving exec writes to owner, user and group
-# chmod -R 755 node_modules/
-# rm -rf node_modules/
-# npm i
-
 sudo cp ./webapp.service /etc/systemd/system/
 
 sudo systemctl daemon-reload
 sudo systemctl enable webapp.service
-# sudo systemctl start webapp.service
-
-
-
-# Install nginx
-sudo amazon-linux-extras list | grep nginx
-sudo amazon-linux-extras enable nginx1
-sudo yum clean metadata
-sudo yum -y install nginx
-sudo systemctl enable nginx
-sudo cp nginx.conf /etc/nginx/
-sudo systemctl restart nginx
-sudo systemctl reload nginx
 
 
 <h4>Important Commands to run the server and test</h4>
@@ -92,6 +64,17 @@ PATCH - http://localhost:3000/v1/product/{id}
 
 DELETE - http://localhost:3000/v1/product/{id}
 
+POST - http://localhost:3000/v1/{product_id}/image
+
+GET - http://localhost:3000/v1/{product_id}/image
+
+GET - http://localhost:3000/v1/{product_id}/image/{image_id}
+
+DELETE - http://localhost:3000/v1/{product_id}/image/{image_id}
+
+
+
+
 
 ## Responds with following HTTP messages
 
@@ -114,11 +97,17 @@ Instructions:
 
 Step 1: Clone the repository or download and unzip the source repository.
 
-Step 2: Create appropriate files in the IDE and write the code to test the API call in Postman.
+Step 2: Make changes in readme and create a PR.
 
-Step 3: Open Postman to Test the API's
+Step 2: Once the code is merged in the org repo the packer file creates an AMI in the aws console. Check for the ami.
 
-Step 4: Check the Database after each and every API is called to see the status in Database.
+Step 3: Check if the packer has zipped your webapp.
+
+Step 4: Run the aws infrastructure by doing Terraform init, terraform plan, terraform apply. The resources and EC2 instance is created.
+
+Step 5: Copy the IP4 address of the AMI created.
+
+Step 6: Hit the apis.
 
 Test the api
 
@@ -135,6 +124,13 @@ http://localhost:3000/v1/product, where you should see: "200 OK".
 http://localhost:3000/v1/product/{id} where you should see: "201 Created".
 
 http://localhost:3000/v1/product/self/ where you should see: "204 No Content".
+
+http://localhost:3000/v1/{product_id}/self where you should see "200 OK".
+
+http://localhost:3000/v1/{product_id}/self where you should see "201 File Uploaded".
+
+http://localhost:3000/v1/{product_id}/image/{image_id} where you should see "204 No Content"
+
 
 
 Please create a pull request with a detailed description of changes.
