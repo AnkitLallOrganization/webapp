@@ -1,4 +1,4 @@
-The following is a guide for creating an Amazon Machine Image (AMI) using Packer and shell script. The Packer file will create an AMI file which can be shared across Dev and Demo accounts. Once the AMI is created, an EC2 instance can be created using Terraform. The public address of the instance can be obtained and the Webapp that was created can be run.
+The following is a guide for creating an Amazon Machine Image (AMI) using Packer and shell script. The Packer file will create an AMI file which can be shared across Dev and Demo accounts. Once the AMI is created, an EC2 instance can be created using Terraform. The public address of the instance can be obtained and the Webapp that was created can be run.ghj
 
 The Webapp is used for API testing and is created using Node.js and MYSQL2. The API requests can be tested using POSTMAN. The prerequisites for this project include Visual Studio Code, POSTMAN, MySQL database, Node.js, AWS, and Terraform.
 
