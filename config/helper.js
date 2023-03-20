@@ -1,6 +1,14 @@
 const bcrypt = require("bcrypt");
-// const dbFuncs = require('../models/dbFuncs');
 const db = require('../config/dbSetup');
+const winston = require("winston");
+const StatsD = require('node-statsd');
+
+const statsdClient = new StatsD();
+
+const logger = winston.createLogger({
+  format: winston.format.json(),
+  transports: [new winston.transports.File({ filename: 'csye6225.log'})],
+});
 
 const createPassHash = async (pass) => {
     const salt = await bcrypt.genSalt();
@@ -177,5 +185,7 @@ module.exports = {
     getDecryptedCreds,
     pAuthCheck,
     imAuth,
-    checkFileType
+    checkFileType,
+    logger,
+    statsdClient
 }
