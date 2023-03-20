@@ -13,10 +13,10 @@ npm i
 
 sudo cp ./packer/webapp.service /etc/systemd/system/
 
-sudo yum install amazon-cloudwatch-agent
+# sudo yum install amazon-cloudwatch-agent
 
-sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
-    -a fetch-config \
-    -m ec2 \
-    -c file:/cloudwatch-config.json \
-    -s
+# sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
+#     -a fetch-config \
+#     -m ec2 \
+#     -c file:/cloudwatch-config.json \
+#     -s
