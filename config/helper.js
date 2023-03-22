@@ -7,7 +7,7 @@ const statsdClient = new StatsD();
 
 const logger = winston.createLogger({
   format: winston.format.json(),
-  transports: [new winston.transports.File({ filename: '../../../var/log/csye6225.log'})],
+  transports: [new winston.transports.File({ filename: '/var/log/csye6225.log'})],
 });
 
 const createPassHash = async (pass) => {

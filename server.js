@@ -17,7 +17,7 @@ db.sequelize.sync({force: false})
   .catch((err) => helper.logger.error("Database setup failed.", err))
 
 app.get('/healthz',function(req, res) {
-  helper.statsdClient.increment('my_counter');
+  helper.statsdClient.increment('health_counter');
   res.status(200).send(); 
 });
 
