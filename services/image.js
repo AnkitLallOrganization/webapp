@@ -150,7 +150,7 @@ const getAllImages = async (req, res) => {
             delete res.dataValues.date_last_updated
             result.push(res.dataValues);
         });
-        helper.logger.info("Image Successfully fetched - ", );
+        helper.logger.info("Image Successfully fetched - ", result);
         return res.status(200).json(result); 
     }catch(err) {
         console.log("DB Error ", err);
