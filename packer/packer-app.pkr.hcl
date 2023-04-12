@@ -68,6 +68,6 @@ build {
 
   provisioner "shell" {
     script = "./packer/webapp.sh"
-    environment_vars = ["ami=${source.amazon-ebs.app-ami}"]
+    // environment_vars = ["ami=${source.amazon-ebs.app-ami}"]
   }
 }

@@ -15,6 +15,6 @@ sudo cp ./packer/webapp.service /etc/systemd/system/
 
 sudo yum install amazon-cloudwatch-agent -y
 
-aws create-launch-template-version --launch-template-data '{"ImageId":$ami}'
-
+#aws create-launch-template-version --launch-template-data '{"ImageId":$ami}'
+aws create-launch-template-version
 aws start-instance-refresh --auto-scaling-group-name "asg_launch_config"
