@@ -23,6 +23,14 @@ variable "subnet_id" {
   default = "subnet-051481c62c6ff86a6"
 }
 
+variable "access_key_id" {
+  type    = string
+}
+
+variable "access_key" {
+  type    = string
+}
+
 variable "ami_users" {
   type    = list(string)
   default = ["680696435068"]
@@ -68,6 +76,6 @@ build {
 
   provisioner "shell" {
     script = "./packer/webapp.sh"
-    environment_vars = ["ami=source.amazon-ebs.app-ami"]
+    environment_vars = ["ami=source.amazon-ebs.app-ami", "access_key=${var.access_key}", "access_key_id=${var.access_key_id}"]
   }
 }

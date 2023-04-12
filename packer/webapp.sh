@@ -19,9 +19,9 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip
 unzip awscliv2.zip
 sudo ./aws/install
 
-# aws configure set aws_access_key_id default_access_key
-# aws configure set aws_secret_access_key default_secret_key
-# aws configure set default.region us-east-1
+aws configure set aws_access_key_id $access_key_id
+aws configure set aws_secret_access_key $access_key
+aws configure set default.region "us-east-1"
 aws ec2 create-launch-template-version --launch-template-data '{"ImageId":"$ami"}'
 # aws ec2 create-launch-template-version
 aws ec2 start-instance-refresh --auto-scaling-group-name "asg_launch_config"
