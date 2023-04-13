@@ -19,6 +19,9 @@ sudo yum install amazon-cloudwatch-agent -y
 # unzip awscliv2.zip
 # sudo ./aws/install
 
+echo $access_key_id
+echp $access_key
+
 aws configure set aws_access_key_id $access_key_id
 aws configure set aws_secret_access_key $access_key
 aws configure set default.region "us-east-1"
