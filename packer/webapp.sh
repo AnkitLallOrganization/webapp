@@ -19,13 +19,13 @@ sudo yum install amazon-cloudwatch-agent -y
 # unzip awscliv2.zip
 # sudo ./aws/install
 
-echo $access_key_id
-echo $access_key
-echo $ami
+# echo $access_key_id
+# echo $access_key
+# echo $ami
 
-aws configure set aws_access_key_id $access_key_id
-aws configure set aws_secret_access_key $access_key
-aws configure set default.region "us-east-1"
-aws ec2 create-launch-template-version --launch-template-id "lt-0d128dcf62f045e91" --launch-template-data '{"ImageId":"$ami"}'
-# aws ec2 create-launch-template-version
-aws ec2 start-instance-refresh --auto-scaling-group-name "asg_launch_config"
+# aws configure set aws_access_key_id $access_key_id
+# aws configure set aws_secret_access_key $access_key
+# aws configure set default.region "us-east-1"
+# aws ec2 create-launch-template-version --launch-template-id "lt-0d128dcf62f045e91" --launch-template-data '{"ImageId":"$ami"}'
+# # aws ec2 create-launch-template-version
+# aws ec2 start-instance-refresh --auto-scaling-group-name "asg_launch_config"
