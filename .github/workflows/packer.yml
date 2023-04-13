@@ -21,7 +21,8 @@ jobs:
       - name: Create zip archive
         run: zip -r webapp.zip .
       - name: Install Packer
-        run: sudo apt-get update && sudo apt-get install -y packer
+        run:  sudo apt-get update && sudo apt-get install -y packer && cd packer && pwd
+        
       - name: Packer Init
         run: packer init packer
       - name: Packer Build - Branches
@@ -35,7 +36,10 @@ jobs:
           aws-region: us-east-1
       - name: Copying ami Artifacts and Launching Template
         working-directory: ./packer
+      
         run: |
+          pwd
+          ls 
           AMI_ID=$(jq -r '.builds[-1].artifact_id' manifest.json | cut -d ":" -f2)
           echo $AMI_ID
           LT_ID=$(aws ec2 describe-launch-templates --launch-template-name launch_template | jq '.LaunchTemplates[].LaunchTemplateId')
