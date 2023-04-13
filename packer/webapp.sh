@@ -20,7 +20,8 @@ sudo yum install amazon-cloudwatch-agent -y
 # sudo ./aws/install
 
 echo $access_key_id
-echp $access_key
+echo $access_key
+echo $ami
 
 aws configure set aws_access_key_id $access_key_id
 aws configure set aws_secret_access_key $access_key
