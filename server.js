@@ -21,7 +21,7 @@ app.get('/healthz',function(req, res) {
   res.status(200).send(); 
 });
 
-app.use('/v1/user',userRoutes);
+app.use('/v2/user',userRoutes);
 app.use('/v1/product',productRoutes);
 
 app.use(methodOverride())
